@@ -1,0 +1,93 @@
+.leaderboard-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #004aad, #002766);
+  font-family: "Poppins", sans-serif;
+  padding: 20px;
+}
+
+.leaderboard-box {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.leaderboard-box h1 {
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+thead {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+tr:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+a {
+  display: inline-block;
+  text-decoration: none;
+  background: #ffcc00;
+  color: #002766;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.3s;
+}
+
+a:hover {
+  background: #ffaa00;
+  transform: scale(1.05);
+}
+
+/* Color-coded rows */
+.green-row {
+  background-color: rgba(0, 128, 0, 0.3); /* Green */
+  font-weight: bold;
+}
+
+.yellow-row {
+  background-color: rgba(255, 255, 0, 0.3); /* Yellow */
+  font-weight: bold;
+}
+
+.red-row {
+  background-color: rgba(255, 0, 0, 0.3); /* Red */
+  font-weight: bold;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
