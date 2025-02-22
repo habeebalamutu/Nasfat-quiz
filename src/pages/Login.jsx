@@ -17,7 +17,6 @@ const Login = () => {
       alert("Password must be at least 4 characters long");
       return;
     }
-    // Mock authentication
     const userData = { username, phoneNumber, password, role: username === "admin" ? "admin" : "user" };
     login(userData);
     navigate("/");

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Admin = () => {
   const [questions, setQuestions] = useState([
@@ -33,6 +33,13 @@ const Admin = () => {
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [startTime, setStartTime] = useState("");
   const [gifts, setGifts] = useState(["", "", "", "", ""]);
+
+  useEffect(() => {
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(9, 0, 0, 0);
+    setStartTime(tomorrow.toISOString().slice(0, 16));
+  }, []);
 
   const addQuestion = () => {
     const question = {

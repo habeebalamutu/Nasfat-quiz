@@ -56,7 +56,7 @@ const SignUp = () => {
               onClick={() => setShowPassword(!showPassword)}
               style={{ position: "absolute", right: "10px", top: "50%", transform: "translateY(-50%)" }}
             >
-              {showPassword ? "🙈" : "👁️"}
+              {showPassword ? "Hide" : "Show"}
             </button>
           </div>
           <button type="submit">Sign Up</button>

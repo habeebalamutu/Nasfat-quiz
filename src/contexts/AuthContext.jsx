@@ -8,9 +8,10 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
+    const storedPosition = localStorage.getItem("position");
     if (storedUser) {
       setUser(storedUser);
-      setPosition(Math.floor(Math.random() * 5) + 1); // Mock user position
+      setPosition(storedPosition ? parseInt(storedPosition, 10) : Math.floor(Math.random() * 5) + 1);
     }
   }, []);
 
@@ -18,14 +19,18 @@ export const AuthProvider = ({ children }) => {
     // Save user data to local storage or server
     localStorage.setItem("user", JSON.stringify(userData));
     setUser(userData);
-    setPosition(Math.floor(Math.random() * 5) + 1); // Mock user position
+    const userPosition = Math.floor(Math.random() * 5) + 1;
+    setPosition(userPosition);
+    localStorage.setItem("position", userPosition);
   };
 
   const login = (userData) => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser && storedUser.username === userData.username && storedUser.phoneNumber === userData.phoneNumber && storedUser.password === userData.password) {
       setUser(storedUser);
-      setPosition(Math.floor(Math.random() * 5) + 1); // Mock user position
+      const userPosition = Math.floor(Math.random() * 5) + 1;
+      setPosition(userPosition);
+      localStorage.setItem("position", userPosition);
     } else {
       alert("Invalid credentials");
     }
@@ -35,6 +40,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setPosition(null);
     localStorage.removeItem("user");
+    localStorage.removeItem("position");
   };
 
   return (
