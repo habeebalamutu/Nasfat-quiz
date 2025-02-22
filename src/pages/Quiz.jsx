@@ -26,8 +26,11 @@ const Quiz = () => {
       setQuizStarted(true);
       const fetchedQuestions = JSON.parse(localStorage.getItem("quizQuestions"));
       setQuestions(fetchedQuestions);
-    } else if (quizStartTime) {
-      const startTime = new Date(quizStartTime).getTime();
+    } else {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(9, 0, 0, 0);
+      const startTime = tomorrow.getTime();
       const interval = setInterval(() => {
         const now = new Date().getTime();
         const distance = startTime - now;
