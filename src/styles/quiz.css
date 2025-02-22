@@ -13,6 +13,12 @@ body {
   font-family: "Poppins", sans-serif;
   padding: 20px;
   text-align: center;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 80%;
+  max-width: 600px;
+  margin: 20px auto;
 }
 
 .quiz-box {
@@ -30,7 +36,7 @@ body {
 }
 
 .question-card {
-  background-color: #ffffff;
+  background-color: #f9f9f9;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
@@ -55,10 +61,18 @@ body {
   margin-bottom: 20px;
 }
 
+/* Countdown Text */
+.countdown-text {
+  color: #ffffff;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
 /* Quiz Header */
 .quiz-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   max-width: 600px;
   margin-bottom: 20px;
@@ -66,14 +80,14 @@ body {
 
 /* Quiz Indicator */
 .quiz-indicator {
-  color: #ffffff;
-  font-size: 1.2rem;
+  color: #0073e6;
+  font-size: 18px;
 }
 
 /* Timer */
 .timer {
-  font-size: 1.2rem;
-  color: #ffcc00;
+  font-size: 18px;
+  color: #ff0000;
   background: #ffffff;
   padding: 10px;
   border-radius: 8px;
@@ -83,7 +97,7 @@ body {
 /* Options Container */
 .options {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 10px;
   justify-content: center;
   margin-top: 20px;
@@ -101,8 +115,8 @@ body {
 
 /* Base Option Button */
 .option-btn {
-  background: #ffcc00;
-  color: #002766;
+  background-color: #0073e6;
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
   border-radius: 8px;
@@ -111,17 +125,21 @@ body {
   transition: background 0.3s, transform 0.3s;
   margin-top: 20px;
   width: 45%; /* Adjust width for two buttons per row */
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
 }
 
 /* Hover Effect */
 .option-btn:hover {
-  background: #ffaa00;
+  background-color: #005bb5;
   transform: scale(1.05);
 }
 
 /* Selected Option (before submission) */
 .selected {
   border: 2px solid #ffaa00;
+  background-color: #005bb5;
 }
 
 /* Correct & Wrong Feedback (after submission) */
@@ -161,6 +179,11 @@ body {
   gap: 10px;
   justify-content: center;
   margin-top: 20px;
+  justify-content: space-around;
+}
+
+.quiz-buttons .option-btn {
+  width: 45%;
 }
 
 /* Submit Button (Green) */

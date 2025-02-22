@@ -83,7 +83,12 @@ const Quiz = () => {
   }, [selectedOption]);
 
   if (!quizStarted) {
-    return <p>The quiz will start in: {countdown}</p>;
+    return (
+      <div className="quiz-container">
+        <h1 className="quiz-title">Quiz Countdown</h1>
+        <p className="countdown-text">The quiz will start in: {countdown}</p>
+      </div>
+    );
   }
 
   if (currentQuestionIndex >= questions.length) {
