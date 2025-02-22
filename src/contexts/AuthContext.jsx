@@ -28,9 +28,7 @@ export const AuthProvider = ({ children }) => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
     if (storedUser && storedUser.username === userData.username && storedUser.phoneNumber === userData.phoneNumber && storedUser.password === userData.password) {
       setUser(storedUser);
-      const userPosition = Math.floor(Math.random() * 5) + 1;
-      setPosition(userPosition);
-      localStorage.setItem("position", userPosition);
+      setPosition(parseInt(localStorage.getItem("position"), 10));
     } else {
       alert("Invalid credentials");
     }
