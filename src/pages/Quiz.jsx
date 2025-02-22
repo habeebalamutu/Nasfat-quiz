@@ -10,7 +10,6 @@ const Quiz = () => {
   const [timer, setTimer] = useState(12);
   const [quizStarted, setQuizStarted] = useState(false);
   const [countdown, setCountdown] = useState(null);
-  const [answerStatus, setAnswerStatus] = useState(null);
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -27,20 +26,20 @@ const Quiz = () => {
       const fetchedQuestions = JSON.parse(localStorage.getItem("quizQuestions"));
       setQuestions(fetchedQuestions);
     } else {
-      const startTime = new Date();
-      startTime.setMinutes(startTime.getMinutes() + 11); // Set start time to 11 minutes from now
+      const startTime = new Date(quizStartTime).getTime();
       const interval = setInterval(() => {
         const now = new Date().getTime();
-        const distance = startTime.getTime() - now;
+        const distance = startTime - now;
         if (distance < 0) {
           clearInterval(interval);
           setQuizStarted(true);
           const fetchedQuestions = JSON.parse(localStorage.getItem("quizQuestions"));
           setQuestions(fetchedQuestions);
         } else {
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
           const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
           const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-          setCountdown(`${minutes}m ${seconds}s`);
+          setCountdown(`${hours}h ${minutes}m ${seconds}s`);
         }
       }, 1000);
       return () => clearInterval(interval);
@@ -68,12 +67,8 @@ const Quiz = () => {
     setTimeout(() => {
       setAnswerStatus(null);
       setSelectedOption(null);
-      if (currentQuestionIndex + 1 < questions.length) {
-        setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-        setTimer(12);
-      } else {
-        setQuizStarted(false);
-      }
+      setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+      setTimer(12);
     }, 2000);
   };
 

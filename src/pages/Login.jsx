@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 import "../styles/auth.css";
 
 const Login = () => {
@@ -13,11 +13,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password.length < 4) {
-      alert("Password must be at least 4 characters long");
-      return;
-    }
-    const userData = { username, phoneNumber, password, role: username === "admin" ? "admin" : "user" };
+    const userData = { username, phoneNumber, password };
     login(userData);
     navigate("/");
   };

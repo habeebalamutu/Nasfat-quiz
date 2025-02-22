@@ -35,9 +35,10 @@ const Admin = () => {
   const [gifts, setGifts] = useState(["", "", "", "", ""]);
 
   useEffect(() => {
-    const startTime = new Date();
-    startTime.setMinutes(startTime.getMinutes() + 11); // Set start time to 11 minutes from now
-    setStartTime(startTime.toISOString().slice(0, 16));
+    const tomorrow = new Date();
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    tomorrow.setHours(9, 0, 0, 0);
+    setStartTime(tomorrow.toISOString().slice(0, 16));
   }, []);
 
   const addQuestion = () => {
