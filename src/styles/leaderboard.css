@@ -1,11 +1,85 @@
+body {
+  background-color: #f0f8ff;
+  font-family: Arial, sans-serif;
+}
+
 .leaderboard-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   min-height: 100vh;
-  background: linear-gradient(to bottom, #004aad, #002766);
-  font-family: "Poppins", sans-serif;
   padding: 20px;
+  background: linear-gradient(to bottom, #004aad, #002766);
+  color: white;
+}
+
+.leaderboard-title {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.leaderboard-subtitle {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.leaderboard-table {
+  width: 100%;
+  max-width: 800px;
+  border-collapse: collapse;
+  background-color: white;
+  color: black;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 15px;
+  text-align: left;
+}
+
+.leaderboard-table th {
+  background-color: #004aad;
+  color: white;
+}
+
+.leaderboard-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.leaderboard-table tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.leaderboard-table tr {
+  transition: background-color 0.3s;
+}
+
+.leaderboard-table tr:hover {
+  background-color: #ddd;
+}
+
+.leaderboard-table tr.green {
+  background-color: green !important;
+  color: white;
+}
+
+.leaderboard-table tr.yellow {
+  background-color: yellow !important;
+  color: black;
+}
+
+.leaderboard-table tr.red {
+  background-color: red !important;
+  color: white;
+}
+
+.leaderboard-table tr.black {
+  background-color: black !important;
+  color: white;
 }
 
 .leaderboard-box {
