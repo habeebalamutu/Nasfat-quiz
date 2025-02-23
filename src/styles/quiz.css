@@ -17,8 +17,8 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 80%;
-  max-width: 600px;
-  margin: 20px auto;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .quiz-box {
@@ -36,13 +36,12 @@ body {
 }
 
 .question-card {
-  background-color: #f9f9f9;
+  background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 90%;
-  max-width: 600px;
-  margin: 20px 0;
+  width: 100%;
+  margin-bottom: 20px;
   transition: background-color 0.5s;
 }
 
@@ -56,8 +55,8 @@ body {
 
 /* Heading Styles */
 .quiz-title {
-  color: #ffffff;
-  font-size: 2rem;
+  font-size: 2em;
+  color: #0073e6;
   margin-bottom: 20px;
 }
 
@@ -81,12 +80,12 @@ body {
 /* Quiz Indicator */
 .quiz-indicator {
   color: #0073e6;
-  font-size: 18px;
+  font-size: 1.2em;
 }
 
 /* Timer */
 .timer {
-  font-size: 18px;
+  font-size: 1.2em;
   color: #ff0000;
   background: #ffffff;
   padding: 10px;
@@ -97,9 +96,8 @@ body {
 /* Options Container */
 .options {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin-top: 20px;
 }
 
@@ -124,10 +122,11 @@ body {
   cursor: pointer;
   transition: background 0.3s, transform 0.3s;
   margin-top: 20px;
-  width: 45%; /* Adjust width for two buttons per row */
+  width: 48%; /* Adjust width for two buttons per row */
   border-radius: 4px;
   padding: 10px;
   font-size: 16px;
+  margin: 1%;
 }
 
 /* Hover Effect */
@@ -180,10 +179,11 @@ body {
   justify-content: center;
   margin-top: 20px;
   justify-content: space-around;
+  width: 100%;
 }
 
 .quiz-buttons .option-btn {
-  width: 45%;
+  width: 48%;
 }
 
 /* Submit Button (Green) */

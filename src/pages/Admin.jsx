@@ -1,33 +1,7 @@
 import { useState, useEffect } from "react";
 
 const Admin = () => {
-  const [questions, setQuestions] = useState([
-    {
-      question: "What is the first pillar of Islam?",
-      options: ["Shahada", "Salah", "Zakat", "Sawm"],
-      correctAnswer: "Shahada",
-    },
-    {
-      question: "How many times do Muslims pray each day?",
-      options: ["Three", "Four", "Five", "Six"],
-      correctAnswer: "Five",
-    },
-    {
-      question: "What is the holy book of Islam?",
-      options: ["Bible", "Torah", "Quran", "Vedas"],
-      correctAnswer: "Quran",
-    },
-    {
-      question: "Who is the last prophet in Islam?",
-      options: ["Moses", "Jesus", "Muhammad", "Abraham"],
-      correctAnswer: "Muhammad",
-    },
-    {
-      question: "What is the month of fasting in Islam?",
-      options: ["Ramadan", "Shawwal", "Dhul-Hijjah", "Muharram"],
-      correctAnswer: "Ramadan",
-    },
-  ]);
+  const [questions, setQuestions] = useState([]);
   const [newQuestion, setNewQuestion] = useState("");
   const [newOptions, setNewOptions] = useState(["", "", "", ""]);
   const [correctAnswer, setCorrectAnswer] = useState("");

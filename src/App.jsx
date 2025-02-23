@@ -4,7 +4,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Quiz from "./pages/Quiz";
 import Navbar from "./components/Navbar";
-import Leaderboard from "./components/Leaderboard";
+import Leaderboard from "./pages/Leaderboard";
 import Admin from "./pages/Admin";
 import Gifts from "./pages/Gifts";
 import { AuthProvider } from "./contexts/AuthContext";
