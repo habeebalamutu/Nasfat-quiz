@@ -1,57 +1,65 @@
-import { useState, useEffect } from "react";
-import { ref, onValue } from "firebase/database";
-import { database } from "../firebase";
+import { useEffect, useState } from "react";
 import "../styles/leaderboard.css";
-import { useAuth } from "../contexts/AuthContext";
 
-const Leaderboard = () => {
-  const [users, setUsers] = useState([]);
-  const { user } = useAuth();
+function Leaderboard() {
+  const [scores, setScores] = useState([]);
 
   useEffect(() => {
-    const usersRef = ref(database, "users");
-    onValue(usersRef, (snapshot) => {
-      const data = snapshot.val();
-      const usersList = data ? Object.values(data) : [];
-      setUsers(usersList);
-    });
+    // 1. Retrieve scoreboard from localStorage
+    const stored = JSON.parse(localStorage.getItem("scoreboard")) || [];
+    // 2. Sort by highest score first
+    stored.sort((a, b) => b.score - a.score);
+    // 3. Take only top 10
+    const topTen = stored.slice(0, 10);
+    setScores(topTen);
   }, []);
-
-  const getBackgroundColor = (index) => {
-    if (index < 3) return "green";
-    if (index < 6) return "yellow";
-    if (index < 10) return "red";
-    return "black";
-  };
 
   return (
     <div className="leaderboard-container">
-      <h1 className="leaderboard-title">Leaderboard</h1>
-      <h2 className="leaderboard-subtitle">Congratulations! Here are your points:</h2>
-      <table className="leaderboard-table">
-        <thead>
-          <tr>
-            <th>Username</th>
-            <th>Score</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((userItem, index) => (
-            <tr key={index} className={getBackgroundColor(index)}>
-              <td>{userItem.username}</td>
-              <td>{userItem.score}</td>
-            </tr>
-          ))}
-          {user && (
-            <tr className="current-user">
-              <td>{user.username}</td>
-              <td>{users.find((u) => u.username === user.username)?.score || 0}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <div className="leaderboard-box">
+        <h1>Leaderboard</h1>
+
+        {scores.length === 0 ? (
+          <p>No scores yet. Be the first to play!</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Username</th>
+                <th>Score</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {scores.map((entry, index) => {
+                // Decide the row class based on rank (index)
+                let rowClass = "";
+                if (index < 3) {
+                  rowClass = "green-row"; // top 3
+                } else if (index >= 3 && index < 7) {
+                  rowClass = "yellow-row"; // rank 4-7
+                } else {
+                  rowClass = "red-row"; // rank 8-10
+                }
+
+                return (
+                  <tr key={index} className={rowClass}>
+                    <td>{index + 1}</td>
+                    <td>{entry.username}</td>
+                    <td>{entry.score}</td>
+                    <td>{new Date(entry.date).toLocaleString()}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+
+        <a href="/">Go Home</a>
+      </div>
     </div>
   );
-};
+}
 
 export default Leaderboard;
