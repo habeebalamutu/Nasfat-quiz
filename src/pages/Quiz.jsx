@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ref, set, get, child } from "firebase/database";
+import { database } from "../firebase";
 import "../styles/quiz.css";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -79,11 +81,12 @@ const Quiz = () => {
       navigate("/login");
       return;
     }
-    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const storedUser = storedUsers.find((u) => u.username === user.username);
-    if (storedUser && storedUser.hasCompletedQuiz) {
-      setHasCompletedQuiz(true);
-    }
+    const usersRef = ref(database, "users");
+    get(child(usersRef, user.username)).then((snapshot) => {
+      if (snapshot.exists() && snapshot.val().hasCompletedQuiz) {
+        setHasCompletedQuiz(true);
+      }
+    });
   }, [user, navigate]);
 
   useEffect(() => {
@@ -131,15 +134,12 @@ const Quiz = () => {
   };
 
   const updateLeaderboard = () => {
-    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const userIndex = storedUsers.findIndex((storedUser) => storedUser.username === user.username);
-    if (userIndex !== -1) {
-      storedUsers[userIndex].score = score;
-      storedUsers[userIndex].hasCompletedQuiz = true;
-    } else {
-      storedUsers.push({ username: user.username, score: score, hasCompletedQuiz: true });
-    }
-    localStorage.setItem("users", JSON.stringify(storedUsers));
+    const userRef = ref(database, `users/${user.username}`);
+    set(userRef, {
+      username: user.username,
+      score: score,
+      hasCompletedQuiz: true,
+    });
   };
 
   useEffect(() => {

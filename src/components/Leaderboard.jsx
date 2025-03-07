@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { ref, onValue } from "firebase/database";
+import { database } from "../firebase";
 import "../styles/leaderboard.css";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -7,8 +9,12 @@ const Leaderboard = () => {
   const { user } = useAuth();
 
   useEffect(() => {
-    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    setUsers(storedUsers);
+    const usersRef = ref(database, "users");
+    onValue(usersRef, (snapshot) => {
+      const data = snapshot.val();
+      const usersList = data ? Object.values(data) : [];
+      setUsers(usersList);
+    });
   }, []);
 
   const getBackgroundColor = (index) => {
