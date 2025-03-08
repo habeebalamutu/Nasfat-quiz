@@ -1,17 +1,22 @@
 import { useEffect, useState } from "react";
+import { collection, query, orderBy, limit, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase";
 import "../styles/leaderboard.css";
 
 function Leaderboard() {
   const [scores, setScores] = useState([]);
 
   useEffect(() => {
-    // 1. Retrieve scoreboard from localStorage
-    const stored = JSON.parse(localStorage.getItem("scoreboard")) || [];
-    // 2. Sort by highest score first
-    stored.sort((a, b) => b.score - a.score);
-    // 3. Take only top 10
-    const topTen = stored.slice(0, 10);
-    setScores(topTen);
+    const q = query(collection(db, "leaderboard"), orderBy("score", "desc"), limit(10));
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      const scoresArray = [];
+      querySnapshot.forEach((doc) => {
+        scoresArray.push(doc.data());
+      });
+      setScores(scoresArray);
+    });
+
+    return () => unsubscribe();
   }, []);
 
   return (
@@ -48,7 +53,7 @@ function Leaderboard() {
                     <td>{index + 1}</td>
                     <td>{entry.username}</td>
                     <td>{entry.score}</td>
-                    <td>{new Date(entry.date).toLocaleString()}</td>
+                    <td>{new Date(entry.date.seconds * 1000).toLocaleString()}</td>
                   </tr>
                 );
               })}
