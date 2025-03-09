@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, serverTimestamp, doc, onSnapshot } from "firebase/firestore";
 import { db } from "../firebase";
 import "../styles/quiz.css";
 import { useAuth } from "../contexts/AuthContext";
@@ -69,10 +69,12 @@ const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [essayAnswer, setEssayAnswer] = useState("");
-  const [timer, setTimer] = useState(12);
+  const [timer, setTimer] = useState(10);
   const [answerStatus, setAnswerStatus] = useState(null);
   const [score, setScore] = useState(0);
   const [hasCompletedQuiz, setHasCompletedQuiz] = useState(false);
+  const [quizStartTime, setQuizStartTime] = useState(null);
+  const [countdown, setCountdown] = useState("");
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -81,12 +83,50 @@ const Quiz = () => {
       navigate("/login");
       return;
     }
-    const storedUsers = JSON.parse(localStorage.getItem("users")) || [];
-    const storedUser = storedUsers.find((u) => u.username === user.username);
-    if (storedUser && storedUser.hasCompletedQuiz) {
-      setHasCompletedQuiz(true);
-    }
+    const fetchQuizStartTime = async () => {
+      const docRef = doc(db, "settings", "quizStartTime");
+      const unsubscribe = onSnapshot(docRef, (docSnap) => {
+        if (docSnap.exists()) {
+          const startTime = docSnap.data().startTime.toDate();
+          console.log("Quiz start time:", startTime);
+          setQuizStartTime(startTime);
+          const now = new Date();
+          console.log("Current time:", now);
+
+          // Set the quiz start time to 8:45 PM today
+          const quizStartTime = new Date();
+          quizStartTime.setHours(20, 45, 0, 0);
+
+          // Set the quiz end time to 10:00 PM today
+          const quizEndTime = new Date();
+          quizEndTime.setHours(22, 0, 0, 0);
+
+          if (now < quizStartTime) {
+            setCountdown(Math.floor((quizStartTime - now) / 1000));
+          } else if (now >= quizStartTime && now <= quizEndTime) {
+            setCountdown(0); // Quiz is currently available
+          } else {
+            // Set the countdown to the next day's quiz start time
+            const nextDayQuizStartTime = new Date(quizStartTime);
+            nextDayQuizStartTime.setDate(nextDayQuizStartTime.getDate() + 1);
+            setCountdown(Math.floor((nextDayQuizStartTime - now) / 1000));
+          }
+        }
+      });
+      return () => unsubscribe();
+    };
+    fetchQuizStartTime();
   }, [user, navigate]);
+
+  useEffect(() => {
+    if (countdown > 0) {
+      const interval = setInterval(() => {
+        setCountdown((prevCountdown) => prevCountdown - 1);
+        console.log("Countdown:", countdown);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [countdown]);
 
   useEffect(() => {
     if (timer === 0) {
@@ -123,10 +163,11 @@ const Quiz = () => {
       setEssayAnswer("");
       if (currentQuestionIndex + 1 < questions.length) {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
-        setTimer(12);
+        setTimer(currentQuestionIndex + 1 === questions.length - 1 ? 12 : 10);
       } else {
         updateLeaderboard();
         setHasCompletedQuiz(true);
+        localStorage.setItem("hasCompletedQuiz", "true");
         navigate("/leaderboard");
       }
     }, 2000);
@@ -166,15 +207,24 @@ const Quiz = () => {
     );
   }
 
-  if (hasCompletedQuiz) {
+  if (localStorage.getItem("hasCompletedQuiz") === "true") {
     return (
       <div className="quiz-container">
         <h1 className="quiz-title">Quiz Completed!</h1>
-        <p>You have already completed the quiz.</p>
+        <p>You have already completed the quiz today.</p>
         <div className="quiz-buttons">
           <button className="option-btn" onClick={() => navigate("/")}>Go Home</button>
           <button className="option-btn" onClick={() => navigate("/leaderboard")}>See Leaderboard</button>
         </div>
+      </div>
+    );
+  }
+
+  if (countdown > 0) {
+    return (
+      <div className="quiz-container">
+        <h1 className="quiz-title">Quiz Countdown</h1>
+        <p>The quiz will start in: {countdown} seconds</p>
       </div>
     );
   }
@@ -206,6 +256,12 @@ const Quiz = () => {
     <div className="quiz-container">
       <h1 className="quiz-title">Quiz</h1>
       <div className="quiz-header">
+        <div className="progress-bar">
+          <div
+            className="progress"
+            style={{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }}
+          ></div>
+        </div>
         <div className="timer" style={{ color: timer <= 3 ? 'red' : 'black' }}>Time Left: {timer}s</div>
         <div className="quiz-indicator">
           Question {currentQuestionIndex + 1} of {questions.length}

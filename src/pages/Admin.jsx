@@ -1,4 +1,6 @@
 import { useState, useEffect } from "react";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../firebase";
 
 const Admin = () => {
   const [questions, setQuestions] = useState([
@@ -63,9 +65,11 @@ const Admin = () => {
     setGifts(newGifts);
   };
 
-  const saveSettings = () => {
-    // Save settings to local storage or server
-    localStorage.setItem("quizStartTime", startTime);
+  const saveSettings = async () => {
+    // Save settings to Firestore
+    await setDoc(doc(db, "settings", "quizStartTime"), {
+      startTime: new Date(startTime),
+    });
     localStorage.setItem("quizQuestions", JSON.stringify(questions));
     localStorage.setItem("quizGifts", JSON.stringify(gifts));
   };

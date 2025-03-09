@@ -19,6 +19,7 @@ body {
   width: 80%;
   max-width: 800px;
   margin: 0 auto;
+  color: white;
 }
 
 .quiz-box {
@@ -36,13 +37,18 @@ body {
 }
 
 .question-card {
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+  animation: fadeIn 0.8s ease-in-out;
   margin-bottom: 20px;
-  transition: background-color 0.5s;
 }
 
 .question-card.correct {
@@ -55,7 +61,7 @@ body {
 
 /* Heading Styles */
 .quiz-title {
-  font-size: 2em;
+  font-size: 2.5em;
   color: #0073e6;
   margin-bottom: 20px;
 }
@@ -70,11 +76,28 @@ body {
 /* Quiz Header */
 .quiz-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   max-width: 600px;
   margin-bottom: 20px;
+}
+
+/* Progress Bar */
+.progress-bar {
+  width: 100%;
+  max-width: 600px;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress {
+  height: 100%;
+  background-color: #4caf50;
+  transition: width 0.3s;
 }
 
 /* Quiz Indicator */
@@ -91,13 +114,14 @@ body {
   padding: 10px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
 }
 
 /* Options Container */
 .options {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: center;
   margin-top: 20px;
 }
 
@@ -113,15 +137,14 @@ body {
 
 /* Base Option Button */
 .option-btn {
-  background-color: #0073e6;
-  color: #ffffff;
-  border: none;
+  background: #ffcc00;
+  color: #002766;
   padding: 10px 20px;
   border-radius: 8px;
   font-weight: bold;
-  cursor: pointer;
   transition: background 0.3s, transform 0.3s;
-  margin-top: 20px;
+  margin: 5px;
+  cursor: pointer;
   width: 48%; /* Adjust width for two buttons per row */
   border-radius: 4px;
   padding: 10px;
@@ -131,7 +154,7 @@ body {
 
 /* Hover Effect */
 .option-btn:hover {
-  background-color: #005bb5;
+  background: #ffaa00;
   transform: scale(1.05);
 }
 
@@ -170,6 +193,16 @@ body {
 }
 .essay.wrong {
   border: 2px solid #dc3545;
+}
+
+/* Essay Answer */
+.essay-answer {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  margin-top: 10px;
 }
 
 /* Quiz Buttons */
@@ -216,6 +249,34 @@ body {
 }
 .skip-btn:hover {
   background: #c82333;
+  transform: scale(1.05);
+}
+
+/* Quiz Navigation */
+.quiz-navigation {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+}
+
+.nav-btn {
+  background: #ffcc00;
+  color: #002766;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.3s;
+  cursor: pointer;
+}
+
+.nav-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: #ffaa00;
   transform: scale(1.05);
 }
 

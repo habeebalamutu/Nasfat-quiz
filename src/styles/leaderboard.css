@@ -62,24 +62,24 @@ body {
   background-color: #ddd;
 }
 
-.leaderboard-table tr.green {
-  background-color: green !important;
-  color: white;
+.leaderboard-table tr.winner-row {
+  background-color: rgba(0, 128, 0, 0.3); /* Green */
+  font-weight: bold;
 }
 
-.leaderboard-table tr.yellow {
-  background-color: yellow !important;
-  color: black;
+.leaderboard-table tr.green-row {
+  background-color: rgba(0, 128, 0, 0.3); /* Green */
+  font-weight: bold;
 }
 
-.leaderboard-table tr.red {
-  background-color: red !important;
-  color: white;
+.leaderboard-table tr.yellow-row {
+  background-color: rgba(255, 255, 0, 0.3); /* Yellow */
+  font-weight: bold;
 }
 
-.leaderboard-table tr.black {
-  background-color: black !important;
-  color: white;
+.leaderboard-table tr.red-row {
+  background-color: rgba(255, 0, 0, 0.3); /* Red */
+  font-weight: bold;
 }
 
 .leaderboard-box {
@@ -136,22 +136,6 @@ a {
 a:hover {
   background: #ffaa00;
   transform: scale(1.05);
-}
-
-/* Color-coded rows */
-.green-row {
-  background-color: rgba(0, 128, 0, 0.3); /* Green */
-  font-weight: bold;
-}
-
-.yellow-row {
-  background-color: rgba(255, 255, 0, 0.3); /* Yellow */
-  font-weight: bold;
-}
-
-.red-row {
-  background-color: rgba(255, 0, 0, 0.3); /* Red */
-  font-weight: bold;
 }
 
 /* Fade In Animation */

@@ -1,6 +1,50 @@
 .gifts-container {
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
   padding: 20px;
+  background: linear-gradient(to bottom, #004aad, #002766);
+  color: white;
+}
+
+.gifts-container h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.gifts-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+}
+
+.gifts-container input,
+.gifts-container select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+}
+
+.gifts-container button {
+  background: #ffcc00;
+  color: #002766;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.gifts-container button:hover {
+  background: #ffaa00;
+  transform: scale(1.05);
 }
 
 .gifts-grid {
